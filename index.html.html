@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAMTECH — ISM Workshop 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#2E1363;--v:#5D24FC;--lav:#BD57FF;
+  --g1:#333;--g2:#666;--g3:#999;--g4:#CCC;
+  --white:#FFF;--bg:#F8F8FA;
+  --green:#1B6B3A;--amber:#B45309;--blue:#1449A0;--red:#9B1C1C;
+}
+body{font-family:'Poppins',sans-serif;background:#1A0A3D;display:flex;flex-direction:column;height:100vh;overflow:hidden;color:var(--g1)}
+
+/* TOP BAR */
+.topbar{height:44px;background:var(--p);border-bottom:2px solid var(--v);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;flex-shrink:0}
+.tb-l{display:flex;align-items:center;gap:10px}
+.tb-mark{width:26px;height:26px;background:var(--v);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff}
+.tb-name{font-size:12px;font-weight:600;color:#fff}.tb-name span{color:var(--lav);font-weight:300}
+.tb-r{font-size:10px;color:rgba(255,255,255,.35)}
+
+/* LAYOUT */
+.app{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:224px;flex-shrink:0;background:var(--p);display:flex;flex-direction:column;overflow:hidden;border-right:1px solid rgba(255,255,255,.07)}
+.sb-inner{flex:1;overflow-y:auto;padding:.6rem .5rem}
+.sb-inner::-webkit-scrollbar{width:3px}
+.sb-inner::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.blk-lbl{font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--lav);padding:.55rem .5rem .25rem;margin-top:.4rem}
+.blk-lbl:first-child{margin-top:0}
+.tile{display:flex;align-items:flex-start;gap:7px;padding:6px 7px;border-radius:6px;cursor:pointer;transition:background .15s;margin-bottom:2px}
+.tile:hover{background:rgba(255,255,255,.07)}
+.tile.active{background:var(--v)}
+.tile-n{font-size:8.5px;font-weight:700;color:rgba(255,255,255,.3);min-width:15px;padding-top:2px;flex-shrink:0}
+.tile.active .tile-n{color:rgba(255,255,255,.6)}
+.tile-t{font-size:10.5px;font-weight:500;color:rgba(255,255,255,.5);line-height:1.3}
+.tile.active .tile-t{color:#fff;font-weight:600}
+.sb-foot{padding:.65rem 1rem;border-top:1px solid rgba(255,255,255,.07);font-size:9px;color:rgba(255,255,255,.25)}
+
+/* STAGE */
+.stage{flex:1;display:flex;flex-direction:column;overflow:hidden;background:#E8E6F0}
+.prog-wrap{height:3px;background:rgba(93,36,252,.15);flex-shrink:0}
+.prog{height:100%;background:linear-gradient(90deg,var(--v),var(--lav));transition:width .3s}
+.viewport{flex:1;display:flex;align-items:stretch;overflow:hidden;padding:1.25rem;gap:0}
+
+/* SLIDES */
+.slide{display:none;flex:1;background:var(--white);border-radius:12px;box-shadow:0 4px 28px rgba(46,19,99,.12);overflow-y:auto;flex-direction:column;position:relative}
+.slide.active{display:flex}
+.slide::-webkit-scrollbar{width:4px}
+.slide::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+
+/* SLIDE INNER LAYOUT — McKinsey zones */
+.s-inner{display:flex;flex-direction:column;flex:1;padding:2rem 2.5rem 1rem}
+
+/* ACTION TITLE zone */
+.action-title{font-size:1.1rem;font-weight:700;color:var(--p);line-height:1.3;max-width:820px;padding-bottom:.75rem;border-bottom:2.5px solid var(--v);margin-bottom:1.25rem}
+.action-title em{color:var(--v);font-style:normal}
+
+/* eyebrow above action title */
+.eyebrow{font-size:8.5px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--v);margin-bottom:.4rem}
+
+/* CONTENT zone */
+.content{flex:1;display:flex;flex-direction:column;gap:.85rem}
+
+/* SOURCE zone */
+.source{font-size:8px;color:var(--g3);font-style:italic;padding-top:.6rem;border-top:1px solid #eee;margin-top:auto;flex-shrink:0;line-height:1.5}
+
+/* SPECIAL slide types */
+.slide-cover{background:var(--p) !important}
+.slide-divider{background:var(--p) !important}
+
+/* ── VISUAL COMPONENTS ── */
+
+/* Connector row — 3 nodes */
+.connector-row{display:flex;align-items:flex-start;gap:0;flex:1}
+.cn-node{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative}
+.cn-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto .6rem;flex-shrink:0}
+.cn-label{font-size:.72rem;font-weight:700;color:var(--p);margin-bottom:.3rem;line-height:1.2}
+.cn-num{font-size:1.5rem;font-weight:800;color:var(--v);line-height:1;margin-bottom:.25rem}
+.cn-desc{font-size:.7rem;color:var(--g2);line-height:1.4;max-width:140px}
+.cn-arrow{display:flex;align-items:center;padding-top:26px;color:var(--g4);font-size:1.2rem;flex-shrink:0;padding-left:4px;padding-right:4px}
+
+/* Horizontal track diagram */
+.track-list{display:flex;flex-direction:column;gap:.5rem;flex:1}
+.track-row{display:grid;grid-template-columns:28px 180px 1fr 130px;gap:0;align-items:center;border-radius:7px;overflow:hidden}
+.tr-icon{width:28px;display:flex;align-items:center;justify-content:center;font-size:14px;padding:.6rem 0;background:var(--p);color:#fff}
+.tr-name{padding:.55rem .75rem;font-size:.76rem;font-weight:700;color:#fff;background:var(--v)}
+.tr-desc{padding:.55rem .85rem;font-size:.72rem;color:var(--g1);background:#F4F2FB}
+.tr-badge{padding:.55rem .6rem;font-size:.67rem;font-weight:600;text-align:center}
+.tr-badge.g{background:#ECFDF5;color:var(--green)}
+.tr-badge.b{background:#EFF6FF;color:var(--blue)}
+.tr-badge.a{background:#FFFBEB;color:var(--amber)}
+.tr-badge.note{background:#FEF9EC;color:#92400E;font-style:italic}
+
+/* Gap chart / funnel visual */
+.gap-visual{display:grid;grid-template-columns:1fr 60px 1fr;gap:.75rem;align-items:center;flex:1}
+.gap-left,.gap-right{display:flex;flex-direction:column;gap:.5rem}
+.gap-bar{border-radius:6px;padding:.65rem .85rem;display:flex;align-items:center;justify-content:space-between}
+.gap-bar-lbl{font-size:.72rem;font-weight:600;color:var(--p)}
+.gap-bar-val{font-size:.85rem;font-weight:800;color:var(--v)}
+.gap-center{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.gap-arrow-v{width:2px;flex:1;background:var(--g4)}
+.gap-mid-val{font-size:1.1rem;font-weight:800;color:var(--v);text-align:center;line-height:1.1}
+.gap-mid-lbl{font-size:.65rem;color:var(--g2);text-align:center}
+
+/* 2x2 matrix */
+.matrix-wrap{flex:1;display:grid;grid-template-rows:24px 1fr 1fr;grid-template-columns:24px 1fr 1fr;gap:4px}
+.mx-corner{grid-column:1;grid-row:1}
+.mx-col-lbl{font-size:.65rem;font-weight:700;color:var(--g2);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;justify-content:center}
+.mx-row-lbl{font-size:.65rem;font-weight:700;color:var(--g2);text-transform:uppercase;letter-spacing:1px;writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center}
+.mx-cell{border-radius:8px;padding:1rem;display:flex;flex-direction:column;justify-content:space-between}
+.mx-cell-num{font-size:1.25rem;font-weight:800;color:var(--v);margin-bottom:.3rem}
+.mx-cell-t{font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:.3rem}
+.mx-cell-d{font-size:.7rem;color:var(--g2);line-height:1.4}
+.bg1{background:#EDE7F6}.bg2{background:#E8F0FE}.bg3{background:#FEF9EC}.bg4{background:#ECFDF5}
+
+/* contrast split */
+.split{display:grid;grid-template-columns:1fr 48px 1fr;gap:.5rem;align-items:stretch;flex:1}
+.split-box{border-radius:10px;padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.5rem}
+.split-lbl{font-size:.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.2rem}
+.split-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--g3);font-size:1rem}
+.split-item{font-size:.75rem;line-height:1.4;color:var(--g1);padding-left:.75rem;border-left:3px solid var(--g4)}
+.split-item.hi{border-left-color:var(--v);color:var(--p);font-weight:600}
+.split-result{font-size:.7rem;color:var(--g3);font-style:italic;margin-top:.25rem;padding:.4rem .6rem;border-radius:5px;background:#F5F5F5}
+.split-result.hi{background:#EDE7F6;color:var(--v);font-weight:600;font-style:normal}
+
+/* pentagon / radar for 5P */
+.p5-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;flex:1}
+.p5-card{border-radius:9px;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.3rem;position:relative}
+.p5-card.star{grid-column:1/-1;border:2px solid var(--v)}
+.p5-icon{font-size:1.25rem;margin-bottom:.2rem}
+.p5-lbl{font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--v)}
+.p5-t{font-size:.8rem;font-weight:700;color:var(--p);margin-bottom:.15rem}
+.p5-govt{font-size:.69rem;color:var(--g2);line-height:1.35;margin-bottom:.35rem}
+.p5-nmtc{font-size:.69rem;color:var(--p);font-weight:600;background:#EDE7F6;border-radius:4px;padding:.25rem .5rem;line-height:1.35}
+
+/* needs icon grid */
+.needs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;flex:1}
+.need-card{border-radius:8px;padding:.85rem;display:flex;flex-direction:column;gap:.3rem;cursor:pointer;transition:all .15s;border:1px solid transparent}
+.need-card:hover{border-color:var(--v);box-shadow:0 2px 12px rgba(93,36,252,.1)}
+.need-icon{font-size:1.3rem;margin-bottom:.15rem}
+.need-n{font-size:.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--v)}
+.need-t{font-size:.78rem;font-weight:700;color:var(--p);line-height:1.25}
+.need-stat{font-size:.72rem;font-weight:800;color:var(--v);margin-top:.15rem}
+.need-hint{font-size:.62rem;color:var(--g2);margin-top:.1rem}
+
+/* traffic light readiness */
+.ready-table{width:100%;border-collapse:collapse;font-size:.73rem;flex:1}
+.ready-table th{background:var(--p);color:#fff;padding:7px 10px;text-align:left;font-weight:600;font-size:.68rem}
+.ready-table td{padding:7px 10px;border-bottom:1px solid #F0EDF8;vertical-align:top;color:var(--g1)}
+.ready-table tr:nth-child(even) td{background:#FAF8FE}
+.tl-dot-r{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle;flex-shrink:0}
+.tl-g{background:#22C55E}.tl-a{background:#F59E0B}.tl-r{background:#EF4444}
+
+/* scorecard table */
+.sc-table{width:100%;border-collapse:collapse;font-size:.73rem}
+.sc-table th{background:var(--p);color:#fff;padding:7px 10px;text-align:left;font-weight:600;font-size:.68rem}
+.sc-table td{padding:6px 10px;border-bottom:1px solid #F0EDF8;vertical-align:top;color:var(--g1)}
+.sc-table tr:nth-child(even) td{background:#FAF8FE}
+
+/* simple data table */
+.dtable{width:100%;border-collapse:collapse;font-size:.73rem}
+.dtable th{background:var(--p);color:#fff;padding:7px 10px;text-align:left;font-weight:600;font-size:.68rem}
+.dtable td{padding:6px 10px;border-bottom:1px solid #F0EDF8;vertical-align:top;color:var(--g1)}
+.dtable tr:nth-child(even) td{background:#FAF8FE}
+.dtable tr:last-child td{border-bottom:none}
+
+/* badge */
+.badge{display:inline-block;padding:2px 7px;border-radius:20px;font-size:.62rem;font-weight:600;white-space:nowrap}
+.b-g{background:#ECFDF5;color:var(--green)}
+.b-b{background:#EFF6FF;color:var(--blue)}
+.b-a{background:#FFFBEB;color:var(--amber)}
+.b-p{background:#EDE7F6;color:var(--p)}
+.b-ph{background:#F3E8FF;color:#7B2FBE;font-style:italic}
+
+/* ph tag */
+.ph{display:inline-flex;align-items:center;gap:3px;background:#F3E8FF;border:1px dashed var(--lav);border-radius:4px;padding:1px 7px;font-size:.65rem;color:#7B2FBE;font-style:italic}
+
+/* timeline */
+.tl{display:flex;flex-direction:column}
+.tl-row{display:grid;grid-template-columns:76px 16px 1fr;gap:0 8px}
+.tl-date{font-size:.65rem;font-weight:600;color:var(--v);text-align:right;padding:4px 0;line-height:1.2}
+.tl-spine{display:flex;flex-direction:column;align-items:center}
+.tl-dot{width:8px;height:8px;border-radius:50%;background:var(--v);margin-top:6px;flex-shrink:0}
+.tl-dot.hi{background:var(--lav);width:10px;height:10px;margin-top:5px}
+.tl-line{width:2px;background:#E0D8F8;flex:1;margin-top:2px}
+.tl-text{font-size:.72rem;color:var(--g1);padding:3px 0 9px;line-height:1.35}
+.tl-text strong{color:var(--p);font-weight:600}
+
+/* ISM 1v2 comparison */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:1rem;flex:1}
+.cmp-box{border-radius:9px;padding:1rem 1.1rem}
+.cmp-lbl{font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem}
+.cmp-row{display:flex;justify-content:space-between;align-items:center;padding:.35rem 0;border-bottom:1px solid rgba(0,0,0,.05);font-size:.72rem}
+.cmp-row:last-child{border-bottom:none}
+.cmp-k{color:var(--g2);font-weight:500}
+.cmp-v{font-weight:700;color:var(--p)}
+.cmp-v.hi{color:var(--v)}
+
+/* stat blocks row */
+.stat-row{display:flex;gap:.75rem}
+.stat-block{flex:1;border-radius:8px;padding:.85rem 1rem;text-align:center}
+.stat-val{font-size:1.5rem;font-weight:800;color:var(--v);line-height:1}
+.stat-lbl{font-size:.65rem;color:var(--g2);margin-top:.25rem;line-height:1.3}
+
+/* budget table */
+.budget-rows{display:flex;flex-direction:column;gap:.4rem;flex:1}
+.budget-row{display:grid;grid-template-columns:1fr 130px;align-items:center;padding:.55rem .75rem;border-radius:7px;gap:.5rem}
+.budget-scheme{font-size:.78rem;font-weight:600;color:var(--p)}
+.budget-amt{font-size:.88rem;font-weight:800;color:var(--v);text-align:right}
+.budget-note{font-size:.65rem;color:var(--g2);grid-column:1/-1;margin-top:-.2rem}
+
+/* cover / divider content */
+.cover-inner{display:flex;flex-direction:column;justify-content:center;flex:1;padding:2.5rem 3rem}
+.cov-tag{display:inline-block;background:rgba(93,36,252,.35);border:1px solid var(--v);color:var(--lav);font-size:8.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:1.25rem;width:fit-content}
+.cov-title{font-size:2.1rem;font-weight:800;color:#fff;line-height:1.1;margin-bottom:.7rem}
+.cov-title span{color:var(--lav)}
+.cov-desc{font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.6;max-width:460px;font-weight:300;margin-bottom:1.75rem}
+.cov-cards{display:flex;gap:.65rem;flex-wrap:wrap}
+.cov-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:9px;padding:.8rem 1rem;min-width:148px;cursor:pointer;transition:all .2s}
+.cov-card:hover{background:rgba(93,36,252,.35);border-color:var(--v);transform:translateY(-2px)}
+.cov-card-n{font-size:1.2rem;font-weight:800;color:var(--lav);margin-bottom:3px}
+.cov-card-t{font-size:.72rem;font-weight:600;color:#fff}
+.cov-card-d{font-size:.63rem;color:rgba(255,255,255,.4);margin-top:2px}
+.cov-meta{display:flex;gap:1.25rem;margin-top:1.75rem;flex-wrap:wrap}
+.cov-meta-i{font-size:.67rem;color:rgba(255,255,255,.35)}
+.cov-meta-i strong{color:rgba(255,255,255,.7);font-weight:600}
+
+.div-inner{display:flex;flex-direction:column;justify-content:center;flex:1;padding:2.5rem 3rem}
+.div-tag{font-size:8.5px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--lav);margin-bottom:.6rem}
+.div-line{width:44px;height:3px;background:var(--v);border-radius:2px;margin-bottom:1.1rem}
+.div-title{font-size:2rem;font-weight:800;color:#fff;line-height:1.15;max-width:480px;margin-bottom:.65rem}
+.div-desc{font-size:.83rem;color:rgba(255,255,255,.45);max-width:420px;line-height:1.6;font-weight:300}
+
+/* deep dive btn */
+.dd-btn{display:inline-flex;align-items:center;gap:5px;background:var(--p);color:#fff;border:none;font-family:'Poppins',sans-serif;font-size:.65rem;font-weight:600;padding:5px 12px;border-radius:20px;cursor:pointer;transition:background .15s;letter-spacing:.3px;margin-top:.75rem;align-self:flex-start}
+.dd-btn:hover{background:var(--v)}
+.dd-btn svg{width:11px;height:11px}
+
+/* BOTTOM NAV */
+.bottom-nav{height:46px;background:var(--p);display:flex;align-items:center;justify-content:space-between;padding:0 1.25rem;flex-shrink:0}
+.nav-btn{display:flex;align-items:center;gap:5px;background:none;border:1.5px solid rgba(255,255,255,.2);color:#fff;font-family:'Poppins',sans-serif;font-size:10.5px;font-weight:500;padding:4px 13px;border-radius:5px;cursor:pointer;transition:all .15s}
+.nav-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.4)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed}
+.nav-btn.primary{background:var(--v);border-color:var(--v)}
+.nav-btn.primary:hover{background:#4a1ed4}
+.nav-c{text-align:center}
+.nav-count{font-size:10.5px;color:rgba(255,255,255,.5)}
+.nav-count strong{color:#fff;font-weight:700}
+.nav-hint{font-size:8.5px;color:rgba(255,255,255,.2);margin-top:2px;letter-spacing:.3px}
+
+/* DEEP DIVE DRAWER */
+.drawer{position:fixed;top:0;right:-460px;width:460px;height:100vh;background:#fff;border-left:3px solid var(--v);box-shadow:-8px 0 32px rgba(46,19,99,.18);transition:right .3s cubic-bezier(.4,0,.2,1);z-index:100;display:flex;flex-direction:column}
+.drawer.open{right:0}
+.dd-head{background:var(--p);padding:.8rem 1.1rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.dd-head-t{font-size:10px;font-weight:700;color:#fff;letter-spacing:1px;text-transform:uppercase}
+.dd-x{background:none;border:none;color:rgba(255,255,255,.5);font-size:17px;cursor:pointer;padding:2px 5px;border-radius:3px;transition:all .15s;line-height:1}
+.dd-x:hover{background:rgba(255,255,255,.1);color:#fff}
+.dd-body{padding:1.35rem;overflow-y:auto;flex:1;font-size:.77rem;line-height:1.65;color:#333}
+.dd-body::-webkit-scrollbar{width:4px}
+.dd-body::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+.dd-body h3{font-size:.82rem;font-weight:700;color:var(--p);margin:1rem 0 .35rem;border-bottom:1px solid #EDE7F6;padding-bottom:3px}
+.dd-body h3:first-child{margin-top:0}
+.dd-body p{margin-bottom:.6rem}
+.dd-body ul{padding-left:1rem;margin-bottom:.6rem}
+.dd-body ul li{margin-bottom:.3rem}
+.dd-body strong{color:var(--p);font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-l">
+    <div class="tb-mark">N</div>
+    <div class="tb-name">NAMTECH <span>School of Semiconductor</span></div>
+  </div>
+  <div class="tb-r">ISM 2.0 Workshop · Internal · June 2026 · Confidential</div>
+</div>
+
+<div class="app">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-inner">
+    <div class="blk-lbl">Overview</div>
+    <div class="tile active" onclick="go(0)"><div class="tile-n">00</div><div class="tile-t">Workshop Overview</div></div>
+
+    <div class="blk-lbl">Block 1 — ISM 1.0 Lessons</div>
+    <div class="tile" onclick="go(1)"><div class="tile-n">01</div><div class="tile-t">Block 1 Introduction</div></div>
+    <div class="tile" onclick="go(2)"><div class="tile-n">02</div><div class="tile-t">Three forces made India's bet unavoidable</div></div>
+    <div class="tile" onclick="go(3)"><div class="tile-n">03</div><div class="tile-t">ISM spans five distinct tracks — not just PLI</div></div>
+    <div class="tile" onclick="go(4)"><div class="tile-n">04</div><div class="tile-t">ISM moved from policy to production in 5 years</div></div>
+    <div class="tile" onclick="go(5)"><div class="tile-n">05</div><div class="tile-t">12 projects mobilised ₹1.64 lakh Cr in private investment</div></div>
+    <div class="tile" onclick="go(6)"><div class="tile-n">06</div><div class="tile-t">Design ecosystem is generating real IP and startups</div></div>
+    <div class="tile" onclick="go(7)"><div class="tile-n">07</div><div class="tile-t">Talent gap is the most urgent bottleneck for ISM plants</div></div>
+    <div class="tile" onclick="go(8)"><div class="tile-n">08</div><div class="tile-t">Four lessons define NAMTECH's ISM 2.0 strategy</div></div>
+    <div class="tile" onclick="go(9)"><div class="tile-n">09</div><div class="tile-t">ISM 1.0 delivered — but disbursement data is needed</div></div>
+
+    <div class="blk-lbl">Block 2 — Vision 2024–2035</div>
+    <div class="tile" onclick="go(10)"><div class="tile-n">10</div><div class="tile-t">Block 2 Introduction</div></div>
+    <div class="tile" onclick="go(11)"><div class="tile-n">11</div><div class="tile-t">ISM 2.0 shifts focus from factories to ecosystem</div></div>
+    <div class="tile" onclick="go(12)"><div class="tile-n">12</div><div class="tile-t">India's window is the next 24–36 months</div></div>
+    <div class="tile" onclick="go(13)"><div class="tile-n">13</div><div class="tile-t">Six national needs define India's semiconductor gap</div></div>
+    <div class="tile" onclick="go(14)"><div class="tile-n">14</div><div class="tile-t">NAMTECH must own white spaces — not compete on criteria</div></div>
+    <div class="tile" onclick="go(15)"><div class="tile-n">15</div><div class="tile-t">People pillar is NAMTECH's primary value proposition</div></div>
+    <div class="tile" onclick="go(16)"><div class="tile-n">16</div><div class="tile-t">NAMTECH is positioned — but execution gaps remain</div></div>
+    <div class="tile" onclick="go(17)"><div class="tile-n">17</div><div class="tile-t">Closing Frame</div></div>
+  </div>
+  <div class="sb-foot">18 slides · 2 blocks · ISM 2.0 Workshop</div>
+</div>
+
+<!-- STAGE -->
+<div class="stage">
+  <div class="prog-wrap"><div class="prog" id="pb"></div></div>
+  <div class="viewport">
+
+    <!-- S0: COVER -->
+    <div class="slide slide-cover active" data-i="0">
+      <div class="cover-inner">
+        <div class="cov-tag">NAMTECH Internal Workshop · June 2026</div>
+        <div class="cov-title">India's Semiconductor Mission —<br><span>What It Means for NAMTECH</span></div>
+        <div class="cov-desc">A structured walkthrough of ISM 1.0, ISM 2.0, and where NAMTECH sits in India's semiconductor talent story — 2024 to 2035.</div>
+        <div class="cov-cards">
+          <div class="cov-card" onclick="go(1)"><div class="cov-card-n">01</div><div class="cov-card-t">ISM 1.0 Lessons</div><div class="cov-card-d">What it was · what it did · what it tells us</div></div>
+          <div class="cov-card" onclick="go(10)"><div class="cov-card-n">02</div><div class="cov-card-t">India's Vision 2024–2035</div><div class="cov-card-d">ISM 2.0 · where NAMTECH fits</div></div>
+        </div>
+        <div class="cov-meta">
+          <div class="cov-meta-i"><strong>18 slides</strong> · 2 blocks</div>
+          <div class="cov-meta-i"><strong>Format:</strong> Key points + Deep Dive per slide</div>
+          <div class="cov-meta-i"><strong>Navigate:</strong> ← → arrow keys or left panel</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S1: BLOCK 1 DIVIDER -->
+    <div class="slide slide-divider" data-i="1">
+      <div class="div-inner">
+        <div class="div-tag">Block 1</div>
+        <div class="div-line"></div>
+        <div class="div-title">Where Are We Coming From?</div>
+        <div class="div-desc">ISM 1.0 — what India built between 2021 and 2026, who got funded, what worked, and the four lessons that shape NAMTECH's ISM 2.0 strategy.</div>
+      </div>
+    </div>
+
+    <!-- S2: WHY INDIA MOVED -->
+    <div class="slide" data-i="2">
+      <div class="s-inner">
+        <div class="eyebrow">Block 1 · Section 1</div>
+        <div class="action-title">Three converging forces in 2021 made India's semiconductor bet <em>unavoidable</em> — not merely strategic</div>
+        <div class="content">
+          <div class="connector-row">
+            <div class="cn-node">
+              <div class="cn-icon" style="background:#EDE7F6">🚨</div>
+              <div class="cn-label">Supply Chain<br>Shock</div>
+              <div class="cn-num">20–25%</div>
+              <div class="cn-desc">Production cut by Indian carmakers in 2021–22 due to automotive microcontroller shortage</div>
+            </div>
+            <div class="cn-arrow">→</div>
+            <div class="cn-node">
+              <div class="cn-icon" style="background:#E8F0FE">🌏</div>
+              <div class="cn-label">Geopolitical<br>Concentration</div>
+              <div class="cn-num">75%</div>
+              <div class="cn-desc">Of global wafer fabrication sits in East Asia — Taiwan, South Korea, China, Japan. A recognised security risk.</div>
+            </div>
+            <div class="cn-arrow">→</div>
+            <div class="cn-node">
+              <div class="cn-icon" style="background:#ECFDF5">💰</div>
+              <div class="cn-label">Economic<br>Imperative</div>
+              <div class="cn-num">$110B</div>
+              <div class="cn-desc">India's projected chip import bill by 2030 — making domestic capability not optional, but fiscally unavoidable</div>
+            </div>
+          </div>
+          <div style="background:#F8F7FC;border-radius:8px;padding:.75rem 1rem;font-size:.72rem;color:var(--g2);line-height:1.5">
+            <strong style="color:var(--p)">Union Cabinet Response:</strong> Approved India Semiconductor Mission (ISM) on 15 December 2021 with ₹76,000 Cr outlay — the largest single industrial-policy push in India's electronics history.
+          </div>
+        </div>
+        <button class="dd-btn" onclick="openDD('dd-s2')">+ Deep Dive — India's semiconductor history &amp; ₹76,000 Cr explained</button>
+        <div class="source">Source: NITI Aayog Frontier Tech Hub Report, 2026 · Society of Indian Automobile Manufacturers (SIAM), 2022 · MeitY / ISM, 2021</div>
+      </div>
+    </div>
+
+    <!-- S3: 5 TRACKS -->
+    <div class="slide" data-i="3">
+      <div class="s-inner">
+        <div class="eyebrow">Block 1 · Section 1</div>
+        <div class="action-title">ISM spans <em>five distinct tracks</em> — conflating it with PLI alone misses four-fifths of its architecture</div>
+        <div class="content">
+          <div class="track-list">
+            <div class="track-row"><div class="tr-icon">🏭</div><div class="tr-name">Manufacturing Incentives</div><div class="tr-desc">50% capex support — Fabs, Display Fabs, ATMP/OSAT units</div><div class="tr-badge g">12 projects · ₹1.64L Cr investment</div></div>
+            <div class="track-row"><div class="tr-icon">💡</div><div class="tr-name">Design — DLI</div><div class="tr-desc">Design Linked Incentive for fabless startups and IP creation</div><div class="tr-badge g">24 projects · ₹900 Cr · 7 chips fab'd</div></div>
+            <div class="track-row"><div class="tr-icon">🎓</div><div class="tr-name">Academia — C2S</div><div class="tr-desc">Chips to Startup — EDA tools and fab access for universities</div><div class="tr-badge g">315 institutions · 94 chips at SCL</div></div>
+            <div class="track-row"><div class="tr-icon">🔬</div><div class="tr-name">Research — ISRC</div><div class="tr-desc">India Semiconductor Research Centre — advanced nodes and post-silicon</div><div class="tr-badge b">Announced Budget 2025-26</div></div>
+            <div class="track-row"><div class="tr-icon">🚀</div><div class="tr-name">ISM 2.0</div><div class="tr-desc">Advanced nodes · skilling · R&D · materials · chemicals · gases</div><div class="tr-badge b">₹1.20 lakh Cr · Budget 2026-27</div></div>
+            <div class="track-row" style="opacity:.7"><div class="tr-icon">⚙️</div><div class="tr-name" style="background:#888">SPECS (parallel)</div><div class="tr-desc">Electronic Components scheme — broader than chips. Sahasra Semi (Rajasthan) is under SPECS, not ISM.</div><div class="tr-badge note">Separate from ISM</div></div>
+          </div>
+        </div>
+        <button class="dd-btn" onclick="openDD('dd-s3')">+ Deep Dive — SPECS vs ISM, SCL Mohali &amp; ISM 2.0 new scope</button>
+        <div class="source">Source: MeitY / ISM official scheme documents, 2021–2026 · Lok Sabha Unstarred Q.6140, Apr 2026</div>
+      </div>
+    </div>
+
+    <!-- S4: TIMELINE -->
+    <div class="slide" data-i="4">
+      <div class="s-inner">
+        <div class="eyebrow">Block 1 · Section 2</div>
+        <div class="action-title">ISM moved from Cabinet approval to <em>first commercial production</em> in under five years — faster than most observers expected</div>
+        <div class="content" style="display:grid;grid-template-columns:1fr 1fr;gap:.85rem">
+          <div class="tl">
+            <div class="tl-row"><div class="tl-date">Dec 2021</div><div class="tl-spine"><div class="tl-dot hi"></div><div class="tl-line"></div></div><div class="tl-text"><strong>Union Cabinet approves ISM</strong> — ₹76,000 Cr outlay, 4 components</div></div>
+            <div class="tl-row"><div class="tl-date">Sep 2022</div><div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">Modified Semcon India programme finalised</div></div>
+            <div class="tl-row"><div class="tl-date">Jan 2023</div><div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">iCET framework — India–USA semiconductor partnership launched</div></div>
+            <div class="tl-row"><div class="tl-date">Jun 2023</div><div class="tl-spine"><div class="tl-dot hi"></div><div class="tl-line"></div></div><div class="tl-text"><strong>Micron ATMP approved</strong> — $2.75B, Sanand, Gujarat</div></div>
+            <div class="tl-row"><div class="tl-date">Feb 2024</div><div class="tl-spine"><div class="tl-dot hi"></div><div class="tl-line"></div></div><div class="tl-text"><strong>Tata-PSMC · TSAT · CG Power</strong> all approved in single month</div></div>
+            <div class="tl-row"><div class="tl-date">Sep 2024</div><div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">Kaynes Semicon approved — ₹3,307 Cr, Sanand</div></div>
+          </div>
+          <div class="tl">
+            <div class="tl-row"><div class="tl-date">2025</div><div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">HCL–Foxconn approved (Jewar) · SiCSem, 3D Glass, CDIL, ASIP approved (Aug)</div></div>
+            <div class="tl-row"><div class="tl-date">Aug 2025</div><div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">CG Power pilot line inaugurated at Sanand</div></div>
+            <div class="tl-row"><div class="tl-date">Oct 2025</div><div class="tl-spine"><div class="tl-dot"></div><div class="tl-line"></div></div><div class="tl-text">Kaynes delivers first India-made chip modules to customers</div></div>
+            <div class="tl-row"><div class="tl-date">Early 2026</div><div class="tl-spine"><div class="tl-dot hi"></div><div class="tl-line"></div></div><div class="tl-text"><strong>Micron Phase 1 commercial production begins</strong></div></div>
+            <div class="tl-row"><div class="tl-date">Mar 2026</div><div class="tl-spine"><div class="tl-dot hi"></div><div class="tl-line"></div></div><div class="tl-text"><strong>Kaynes commercial production — PM inauguration, Sanand</strong></div></div>
+            <div class="tl-row"><div class="tl-date">May–Jun 2026</div><div class="tl-spine"><div class="tl-dot hi"></div><div class="tl-line"></div></div><div class="tl-text"><strong>Crystal Matrix + Suchi approved · India joins Pax Silica · ISM 2.0 announced</strong></div></div>
+          </div>
+        </div>
+        <div class="source">Source: PIB press releases 2021–2026 · MeitY / ISM · Ministry of Finance, Budget 2026-27</div>
+      </div>
+    </div>
+
+    <!-- S5: 12 PROJECTS -->
+    <div class="slide" data-i="5">
+      <div class="s-inner">
+        <div class="eyebrow">Block 1 · Section 3</div>
+        <div class="action-title">12 approved ISM projects have mobilised <em>₹1.64 lakh Cr</em> in private investment — ₹2.16 of private capital for every ₹1 of government subsidy</div>
+        <div class="content">
+          <table class="dtable">
+            <thead><tr><th>Approved</th><th>Company</th><th>Type</th><th>Location</th><th>Investment</th><th>Operational Status</th></tr></thead>
+            <tbody>
+              <tr><td>Jun 2023</td><td><strong>Micron Technology</strong></td><td>ATMP (memory)</td><td>Sanand, GJ</td><td>₹22,516 Cr</td><td><span class="badge b-g">Operational Feb 2026</span></td></tr>
+              <tr><td>Feb 2024</td><td><strong>Tata Electronics + PSMC</strong></td><td>Logic Fab 28nm</td><td>Dholera, GJ</td><td>₹91,526 Cr</td><td><span class="badge b-b">Commercial FY2029–30</span></td></tr>
+              <tr><td>Feb 2024</td><td><strong>TSAT (Tata Semi)</strong></td><td>OSAT/ATMP</td><td>Jagiroad, AS</td><td>₹27,000 Cr</td><td><span class="badge b-b">Phase 1: 2026</span></td></tr>
+              <tr><td>Feb 2024</td><td><strong>CG Power + Renesas + Stars</strong></td><td>OSAT/Packaging</td><td>Sanand, GJ</td><td>₹7,600 Cr</td><td><span class="badge b-g">Pilot line Aug 2025</span></td></tr>
+              <tr><td>Sep 2024</td><td><strong>Kaynes Semicon</strong></td><td>OSAT/ATMP</td><td>Sanand, GJ</td><td>₹3,307 Cr</td><td><span class="badge b-g">Operational Apr 2026</span></td></tr>
+              <tr><td>2025</td><td><strong>HCL–Foxconn JV</strong></td><td>Display Driver IC Fab</td><td>Jewar, UP</td><td>₹3,706 Cr</td><td><span class="badge b-b">Expected 2027</span></td></tr>
+              <tr><td>Aug 2025</td><td><strong>SiCSem</strong></td><td>SiC Fab + ATMP</td><td>Bhubaneswar, OR</td><td>₹2,066 Cr</td><td><span class="badge b-a">Expected post 2027</span></td></tr>
+              <tr><td>Aug 2025</td><td><strong>3D Glass Solutions</strong></td><td>Glass Substrate + ATMP</td><td>Bhubaneswar, OR</td><td>₹1,943 Cr</td><td><span class="badge b-a">Expected post 2027</span></td></tr>
+              <tr><td>Aug 2025</td><td><strong>CDIL</strong></td><td>Discrete / Legacy chips</td><td>Mohali, PB</td><td>₹117 Cr</td><td><span class="badge b-b">2026–27</span></td></tr>
+              <tr><td>Aug 2025</td><td><strong>ASIP Technologies</strong></td><td>Advanced SiP packaging</td><td>Andhra Pradesh</td><td>₹468 Cr</td><td><span class="badge b-b">2026–27</span></td></tr>
+              <tr><td>May 2026</td><td><strong>Crystal Matrix (CML)</strong></td><td>GaN Fab + Mini/Micro LED</td><td>Dholera, GJ</td><td>₹3,936 Cr</td><td><span class="badge b-b">Approved — timeline TBD</span></td></tr>
+              <tr><td>May 2026</td><td><strong>Suchi Semicon</strong></td><td>OSAT (discrete semi)</td><td>Surat, GJ</td><td>TBD</td><td><span class="badge b-b">Approved — timeline TBD</span></td></tr>
+            </tbody>
+          </table>
+          <div style="font-size:.68rem;color:var(--g3);font-style:italic">* Sahasra Semiconductors (Bhiwadi, Rajasthan) is supported under SPECS scheme — not ISM directly.</div>
+        </div>
+        <button class="dd-btn" onclick="openDD('dd-s5')">+ Deep Dive — Pilot lines vs production, Tata-PSMC significance &amp; geographic concentration</button>
+        <div class="source">Source: PIB press releases 2023–2026 · ISM official approvals · Ministry of Electronics and IT</div>
+      </div>
+    </div>
+
+    <!-- S6: DESIGN ECOSYSTEM -->
+    <div class="slide" data-i="6">
+      <div class="s-inner">
+        <div class="eyebrow">Block 1 · Section 4</div>
+        <div class="action-title">ISM's design ecosystem is generating <em>real IP, real chips, and real VC funding</em> — not just academic activity</div>
+        <div class="content">
+          <div class="stat-row">
+            <div class="stat-block" style="background:#EDE7F6"><div class="stat-val">24</div><div class="stat-lbl">DLI projects approved<br>₹900 Cr total project value</div></div>
+            <div class="stat-block" style="background:#E8F0FE"><div class="stat-val">103</div><div class="stat-lbl">Startups with EDA tool access<br>65 lakh hours of tool usage</div></div>
+            <div class="stat-block" style="background:#ECFDF5"><div class="stat-val">315</div><div class="stat-lbl">C2S universities/institutes<br>146 designs taped out</div></div>
+            <div class="stat-block" style="background:#FEF9EC"><div class="stat-val">₹650Cr</div><div class="stat-lbl">VC funding raised by<br>Indian chip design startups</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+            <div style="background:#F8F7FC;border-radius:8px;padding:.85rem 1rem">
+              <div style="font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem">Key DLI Outputs</div>
+              <div style="font-size:.72rem;color:var(--g1);line-height:1.55">
+                🔬 7 chips fabricated (incl. 12nm at TSMC)<br>
+                📄 10 patents filed<br>
+                🧩 140+ reusable IP cores developed<br>
+                💰 15 of 24 companies raised VC funding
+              </div>
+            </div>
+            <div style="background:#F8F7FC;border-radius:8px;padding:.85rem 1rem">
+              <div style="font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem">Key Sectors Addressed</div>
+              <div style="font-size:.72rem;color:var(--g1);line-height:1.55">
+                📡 Satellite communications · 5G/IoT<br>
+                🛡️ Defence RF chips (Ka-Band RADAR)<br>
+                ⚡ Energy metering · smart grid<br>
+                🤖 Edge AI · autonomous systems
+              </div>
+            </div>
+          </div>
+          <div style="background:#F8F7FC;border-radius:8px;padding:.75rem 1rem">
+            <div style="font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.35rem">C2S Programme</div>
+            <div style="font-size:.72rem;color:var(--g1);line-height:1.5">315 universities/institutes · 146 designs taped out · <strong>94 student-designed chips fabricated at SCL Mohali</strong> · 50+ more institutions preparing ~80 new designs for fabrication</div>
+          </div>
+        </div>
+        <button class="dd-btn" onclick="openDD('dd-s6')">+ Deep Dive — Full DLI startup list, C2S programme &amp; key chip examples</button>
+        <div class="source">Source: Lok Sabha Unstarred Q.6140 (Minister of State, MeitY), 1 Apr 2026 · ISM / C-DAC ChipIN Centre</div>
+      </div>
+    </div>
+
+    <!-- S7: TALENT GAP -->
+    <div class="slide" data-i="7">
+      <div class="s-inner">
+        <div class="eyebrow">Block 1 · Section 5</div>
+        <div class="action-title">A gap of <em>6.5 million semiconductor workers by 2030</em> is the most urgent bottleneck — and the least addressed by ISM 1.0</div>
+        <div class="content">
+          <div class="gap-visual">
+            <div class="gap-left">
+              <div style="font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem">What ISM 1.0 Built on Talent</div>
+              <div class="gap-bar" style="background:#EDE7F6"><span class="gap-bar-lbl">🎓 C2S institutions</span><span class="gap-bar-val">315</span></div>
+              <div class="gap-bar" style="background:#E8F0FE"><span class="gap-bar-lbl">🏫 Universities with EDA</span><span class="gap-bar-val">350</span></div>
+              <div class="gap-bar" style="background:#ECFDF5"><span class="gap-bar-lbl">🔧 Chips fabricated (C2S)</span><span class="gap-bar-val">94</span></div>
+              <div class="gap-bar" style="background:#FEF9EC"><span class="gap-bar-lbl">🏭 Company academies</span><span class="gap-bar-val">2+</span></div>
+              <div style="margin-top:.5rem;font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase">NITI Aayog's Verdict</div>
+              <div style="font-size:.72rem;color:var(--g2);font-style:italic;margin-top:.3rem;line-height:1.4">"Skilling initiatives must begin <strong style="color:var(--p)">immediately</strong> due to long talent-incubation cycles unique to the hardware ecosystem."</div>
+            </div>
+            <div class="gap-center">
+              <div class="gap-arrow-v"></div>
+              <div style="font-size:1.4rem">⚡</div>
+              <div class="gap-mid-val">GAP</div>
+              <div class="gap-arrow-v"></div>
+            </div>
+            <div class="gap-right">
+              <div style="font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem">What the Plants Actually Need</div>
+              <div class="gap-bar" style="background:#F3E8FF"><span class="gap-bar-lbl">👷 Total workforce needed by 2030</span><span class="gap-bar-val" style="color:var(--lav)">6.5M</span></div>
+              <div class="gap-bar" style="background:#FEF2F2"><span class="gap-bar-lbl">🔴 Highly skilled engineers</span><span class="gap-bar-val" style="color:#DC2626">1.5M</span></div>
+              <div class="gap-bar" style="background:#FFF7ED"><span class="gap-bar-lbl">🟠 Semi-skilled workers</span><span class="gap-bar-val" style="color:var(--amber)">5M</span></div>
+              <div class="gap-bar" style="background:#FEF9EC"><span class="gap-bar-lbl">⚠️ Skills vacancy by 2030</span><span class="gap-bar-val" style="color:var(--amber)">67,000</span></div>
+              <div class="gap-bar" style="background:#ECFDF5"><span class="gap-bar-lbl">✅ Current workforce</span><span class="gap-bar-val" style="color:var(--green)">345,000</span></div>
+            </div>
+          </div>
+          <div style="background:#F4F2FB;border-radius:9px;padding:.85rem 1rem;border-left:3px solid var(--v)">
+            <div style="font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem">NITI Aayog's 4-Layer Talent Pyramid — Where the Gap Sits</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem .85rem">
+              <div style="display:flex;gap:8px;align-items:flex-start;font-size:.71rem;color:var(--g1);line-height:1.4"><span style="background:var(--p);color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:3px;flex-shrink:0;margin-top:1px">L1</span><span><strong style="color:var(--p)">Technicians</strong> — National Fab Academy, ITI / polytechnic networks, cleanroom operations and yield management. <em style="color:var(--v)">NAMTECH's primary target.</em></span></div>
+              <div style="display:flex;gap:8px;align-items:flex-start;font-size:.71rem;color:var(--g1);line-height:1.4"><span style="background:#1449A0;color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:3px;flex-shrink:0;margin-top:1px">L2</span><span><strong style="color:var(--p)">Engineers</strong> — University curricula with mandatory tape-out experience, packaging integration and semiconductor process knowledge.</span></div>
+              <div style="display:flex;gap:8px;align-items:flex-start;font-size:.71rem;color:var(--g1);line-height:1.4"><span style="background:#1B6B3A;color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:3px;flex-shrink:0;margin-top:1px">L3</span><span><strong style="color:var(--p)">Researchers</strong> — Advanced materials scientists, nanoelectronics specialists. Support via upgraded IIT / IISc centres under NITI Aayog roadmap.</span></div>
+              <div style="display:flex;gap:8px;align-items:flex-start;font-size:.71rem;color:var(--g1);line-height:1.4"><span style="background:#B45309;color:#fff;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:3px;flex-shrink:0;margin-top:1px">L4</span><span><strong style="color:var(--p)">Architects</strong> — Global Talent Infusion Programme targeting experienced Indian diaspora professionals in advanced semiconductor design and leadership.</span></div>
+            </div>
+          </div>
+        </div>
+        <button class="dd-btn" onclick="openDD('dd-s7')">+ Deep Dive — Full 6-layer workforce architecture &amp; automation cross-layer advantage</button>
+        <div class="source">Source: NITI Aayog Frontier Tech Hub Report, 2026 · SEMI / Deloitte Global Semiconductor Talent Report, 2025 · NAMTECH Policy Note on Regional Semiconductor Hubs</div>
+      </div>
+    </div>
+
+    <!-- S8: 4 LESSONS (2x2) -->
+    <div class="slide" data-i="8">
+      <div class="s-inner">
+        <div class="eyebrow">Block 1 · Section 6</div>
+        <div class="action-title">ISM 1.0 succeeded in what it was designed to do — four lessons now define <em>how NAMTECH must position for ISM 2.0</em></div>
+        <div class="content">
+          <div class="matrix-wrap">
+            <div class="mx-corner"></div>
+            <div class="mx-col-lbl">Policy &amp; Capital</div>
+            <div class="mx-col-lbl">Relationships &amp; Timing</div>
+            <div class="mx-row-lbl">What ISM 1.0 Showed</div>
+            <div class="mx-cell bg1">
+              <div>
+                <div class="mx-cell-num">01</div>
+                <div class="mx-cell-t">Capital follows commitment</div>
+                <div class="mx-cell-d">Every ISM 1.0 approval came after months of negotiation. The companies that got approved had the most complete picture. The ISM 2.0 application must be the culmination of a relationship already built — not the beginning of one.</div>
+              </div>
+            </div>
+            <div class="mx-cell bg2">
+              <div>
+                <div class="mx-cell-num">02</div>
+                <div class="mx-cell-t">Identify next cycle's beneficiaries now</div>
+                <div class="mx-cell-d">Companies receiving ISM 2.0 incentives will face the same workforce constraint Micron faces today. Identifying those companies before the policy is announced is the highest-leverage action available in the next 90 days.</div>
+              </div>
+            </div>
+            <div class="mx-row-lbl">What Must Change for ISM 2.0</div>
+            <div class="mx-cell bg3">
+              <div>
+                <div class="mx-cell-num">03</div>
+                <div class="mx-cell-t">Talent is now a documented bottleneck</div>
+                <div class="mx-cell-d">ISM 1.0 built the factories. ISM 2.0 cannot succeed without building the workforce. This is not a soft story — it is an industrial supply chain argument. The factories exist. They need people.</div>
+              </div>
+            </div>
+            <div class="mx-cell bg4">
+              <div>
+                <div class="mx-cell-num">04</div>
+                <div class="mx-cell-t">The state matters as much as the centre</div>
+                <div class="mx-cell-d">Gujarat has more ISM-approved investment than any other state. GSEM engagement, DST Gujarat partnership, and state-level facilitation are not peripheral to the ISM 2.0 story — they are central to it.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="source">Source: Analysis based on ISM 1.0 project approvals (MeitY, 2023–2026) · NITI Aayog Frontier Tech Hub Report, 2026</div>
+      </div>
+    </div>
+
+    <!-- S9: SCORECARD -->
+    <div class="slide" data-i="9">
+      <div class="s-inner">
+        <div class="eyebrow">Block 1 · Section 3A</div>
+        <div class="action-title">ISM 1.0 has delivered strong outcomes across all tracked parameters — <em>ministry data on disbursement and employment will further strengthen this picture</em></div>
+        <div class="content">
+          <table class="sc-table">
+            <thead><tr><th>Parameter</th><th>Intent / Target</th><th>Outcome (Jun 2026)</th><th>Assessment</th></tr></thead>
+            <tbody>
+              <tr><td>Private investment mobilised</td><td>Not specified</td><td><strong>₹1.64 lakh Cr</strong> — 12 projects</td><td><span class="badge b-g">Exceeded</span></td></tr>
+              <tr><td>Manufacturing projects</td><td>Not specified</td><td><strong>12 approved</strong></td><td><span class="badge b-g">Strong</span></td></tr>
+              <tr><td>Design projects (DLI)</td><td>Not specified</td><td><strong>24 approved</strong> · ₹900 Cr value</td><td><span class="badge b-g">Strong</span></td></tr>
+              <tr><td>Commercial production</td><td>2025–26 for early plants</td><td>Micron ✓ · Kaynes ✓ · Others 2026–28</td><td><span class="badge b-g">On track</span></td></tr>
+              <tr><td>Chips fabricated</td><td>Not specified</td><td>94 (C2S) + 7 (DLI) = <strong>101 total</strong></td><td><span class="badge b-g">Strong</span></td></tr>
+              <tr><td>Institutions supported</td><td>Not specified</td><td><strong>315</strong> C2S + <strong>103</strong> EDA companies</td><td><span class="badge b-g">Strong</span></td></tr>
+              <tr><td>VC funding raised</td><td>Not specified</td><td><strong>₹650 Cr</strong> by DLI startups</td><td><span class="badge b-g">Strong</span></td></tr>
+              <tr><td>Govt outlay disbursed</td><td>₹76,000 Cr available</td><td><span class="ph">To be validated with Ministry — will strengthen the scorecard further</span></td><td><span class="badge b-ph">Placeholder</span></td></tr>
+              <tr><td>Jobs created (actual)</td><td>80,000+ direct (projected)</td><td><span class="ph">To be validated with Ministry — will add to the jobs creation story</span></td><td><span class="badge b-ph">Placeholder</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="source">Source: MeitY / ISM official approvals 2023–2026 · Lok Sabha Q.6140, Apr 2026 · PIB press releases</div>
+      </div>
+    </div>
+
+    <!-- S10: BLOCK 2 DIVIDER -->
+    <div class="slide slide-divider" data-i="10">
+      <div class="div-inner">
+        <div class="div-tag">Block 2</div>
+        <div class="div-line"></div>
+        <div class="div-title">What India Needs —<br>2024 to 2035</div>
+        <div class="div-desc">ISM 2.0 confirmed direction, the technology horizon, the national workforce gaps — and where NAMTECH sits in this picture. The move from push to pull.</div>
+      </div>
+    </div>
+
+    <!-- S11: ISM 2.0 CONFIRMED -->
+    <div class="slide" data-i="11">
+      <div class="s-inner">
+        <div class="eyebrow">Block 2 · Section A</div>
+        <div class="action-title">ISM 2.0 deliberately shifts focus from <em>building factories</em> to building the full ecosystem — R&amp;D, IP, skilling and advanced nodes</div>
+        <div class="content">
+          <div class="compare">
+            <div class="cmp-box" style="background:#F8F7FC">
+              <div class="cmp-lbl" style="color:var(--g2)">ISM 1.0 — What It Was</div>
+              <div class="cmp-row"><span class="cmp-k">Financial outlay</span><span class="cmp-v">₹76,000 Cr</span></div>
+              <div class="cmp-row"><span class="cmp-k">Strategic focus</span><span class="cmp-v">Manufacturing incentives</span></div>
+              <div class="cmp-row"><span class="cmp-k">Technology goal</span><span class="cmp-v">Mature nodes (28nm+)</span></div>
+              <div class="cmp-row"><span class="cmp-k">Ecosystem scope</span><span class="cmp-v">Attract manufacturers</span></div>
+              <div class="cmp-row"><span class="cmp-k">Design support</span><span class="cmp-v">Limited DLI</span></div>
+              <div class="cmp-row"><span class="cmp-k">Skilling</span><span class="cmp-v">C2S (design-focused)</span></div>
+            </div>
+            <div class="cmp-box" style="background:#EDE7F6">
+              <div class="cmp-lbl" style="color:var(--v)">ISM 2.0 — What It Becomes</div>
+              <div class="cmp-row"><span class="cmp-k">Financial outlay</span><span class="cmp-v hi">₹1.20 lakh Cr ↑</span></div>
+              <div class="cmp-row"><span class="cmp-k">Strategic focus</span><span class="cmp-v hi">R&amp;D, IP, innovation ↑</span></div>
+              <div class="cmp-row"><span class="cmp-k">Technology goal</span><span class="cmp-v hi">3nm and 2nm nodes ↑</span></div>
+              <div class="cmp-row"><span class="cmp-k">Ecosystem scope</span><span class="cmp-v hi">Full value chain ↑</span></div>
+              <div class="cmp-row"><span class="cmp-k">Design support</span><span class="cmp-v hi">50+ fabless companies ↑</span></div>
+              <div class="cmp-row"><span class="cmp-k">Skilling</span><span class="cmp-v hi">Industry-led training centres ↑</span></div>
+            </div>
+          </div>
+          <div class="budget-rows">
+            <div style="font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.2rem">FY 2026-27 Budget Allocation</div>
+            <div class="budget-row" style="background:#EDE7F6"><span class="budget-scheme">ISM 2.0 (Initial allocation)</span><span class="budget-amt">₹1,000 Cr</span></div>
+            <div class="budget-row" style="background:#F4F2FB"><span class="budget-scheme">Modified Semiconductor &amp; Display Fab Ecosystem</span><span class="budget-amt">₹8,000 Cr</span></div>
+            <div class="budget-row" style="background:#EDE7F6"><span class="budget-scheme">SCL Mohali Modernisation (₹4,500 Cr over 3 years)</span><span class="budget-amt">₹900 Cr</span></div>
+            <div class="budget-row" style="background:#F4F2FB"><span class="budget-scheme">Electronic Components Manufacturing Scheme (ECMS)</span><span class="budget-amt">₹1,500 Cr</span></div>
+          </div>
+        </div>
+        <div class="source">Source: Union Budget 2026-27, Ministry of Finance · MeitY / ISM 2.0 scheme documents</div>
+      </div>
+    </div>
+
+    <!-- S12: TECH HORIZON -->
+    <div class="slide" data-i="12">
+      <div class="s-inner">
+        <div class="eyebrow">Block 2 · Section B</div>
+        <div class="action-title">India's semiconductor window is defined by decisions made in the <em>next 24–36 months</em> — the technology base is shifting under current strategy</div>
+        <div class="content">
+          <div class="stat-row">
+            <div class="stat-block" style="background:#EDE7F6"><div class="stat-val">$631B</div><div class="stat-lbl">Global market 2024<br>→ $1.5T by 2035 (8.5% CAGR)</div></div>
+            <div class="stat-block" style="background:#E8F0FE"><div class="stat-val">85–90%</div><div class="stat-lbl">India's semiconductor<br>import dependency today</div></div>
+            <div class="stat-block" style="background:#FEF9EC"><div class="stat-val">$100–110B</div><div class="stat-lbl">India's chip demand by 2030<br>(from $45–50B today)</div></div>
+            <div class="stat-block" style="background:#ECFDF5"><div class="stat-val">$120–150B</div><div class="stat-lbl">NITI Aayog Vision 2035<br>India semiconductor value chain</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+            <div style="background:#F8F7FC;border-radius:9px;padding:.9rem 1rem">
+              <div style="font-size:.68rem;font-weight:700;color:var(--v);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem">Technology Trajectory</div>
+              <div style="font-size:.72rem;color:var(--g1);line-height:1.55">
+                <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid #eee"><span>Current frontier (TSMC/Samsung)</span><span style="font-weight:700;color:var(--v)">2nm (2025–26)</span></div>
+                <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid #eee"><span>Next generation</span><span style="font-weight:700;color:var(--v)">Angstrom-scale (2027–30)</span></div>
+                <div style="display:flex;justify-content:space-between;padding:.25rem 0;border-bottom:1px solid #eee"><span>India's approved fabs</span><span style="font-weight:700;color:var(--green)">28nm+ ✓ Right start</span></div>
+                <div style="display:flex;justify-content:space-between;padding:.25rem 0"><span>ISM 2.0 ambition</span><span style="font-weight:700;color:var(--v)">3nm / 2nm ↑</span></div>
+              </div>
+            </div>
+            <div style="background:#FEF2F2;border-radius:9px;padding:.9rem 1rem;border-left:3px solid #DC2626">
+              <div style="font-size:.68rem;font-weight:700;color:#DC2626;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.4rem">⚠ Strategic Risk — NITI Aayog</div>
+              <div style="font-size:.73rem;color:var(--g1);line-height:1.5;font-style:italic">"<strong style="color:var(--p);font-style:normal">India can't do everything.</strong> Spreading thin across legacy fabs, advanced design, materials research, packaging and EDA risks not winning anywhere. Decisions made in the next 24–36 months determine whether India is a customer or contributor to the next chip generation."</div>
+            </div>
+          </div>
+        </div>
+        <button class="dd-btn" onclick="openDD('dd-s12')">+ Deep Dive — Angstrom-scale chips, Pax Silica &amp; India's import trajectory</button>
+        <div class="source">Source: NITI Aayog Frontier Tech Hub Report, 2026 · ISM official data, MeitY · NITI Aayog Semiconductor Vision 2035</div>
+      </div>
+    </div>
+
+    <!-- S13: 6 NEEDS -->
+    <div class="slide" data-i="13">
+      <div class="s-inner">
+        <div class="eyebrow">Block 2 · Section C</div>
+        <div class="action-title">Six national needs define India's semiconductor gap — each is a white space that <em>no single institution is credibly addressing today</em></div>
+        <div class="content">
+          <div class="needs-grid">
+            <div class="need-card" style="background:#EDE7F6" onclick="openDD('dd-n1')">
+              <div class="need-icon">🏭</div>
+              <div class="need-n">Need 01</div>
+              <div class="need-t">Backend ATMP Talent at Industrial Scale</div>
+              <div class="need-stat">12 plants · 0 academic ATMP programmes</div>
+              <div class="need-hint">Click for deep dive →</div>
+            </div>
+            <div class="need-card" style="background:#E8F0FE" onclick="openDD('dd-n2')">
+              <div class="need-icon">🕸️</div>
+              <div class="need-n">Need 02</div>
+              <div class="need-t">Hub-and-Spoke Network to ITIs &amp; Diploma Colleges</div>
+              <div class="need-stat">5 million semi-skilled workers needed by 2030</div>
+              <div class="need-hint">Click for deep dive →</div>
+            </div>
+            <div class="need-card" style="background:#ECFDF5" onclick="openDD('dd-n3')">
+              <div class="need-icon">📚</div>
+              <div class="need-n">Need 03</div>
+              <div class="need-t">Short-Cycle EDP for Working Professionals</div>
+              <div class="need-stat">67,000 positions vacant by 2030 — skills mismatch</div>
+              <div class="need-hint">Click for deep dive →</div>
+            </div>
+            <div class="need-card" style="background:#FEF9EC" onclick="openDD('dd-n4')">
+              <div class="need-icon">⚙️</div>
+              <div class="need-n">Need 04</div>
+              <div class="need-t">L5 + L6 + Automation — The Invisible Layers</div>
+              <div class="need-stat">Most critical · most neglected · NAMTECH advantage</div>
+              <div class="need-hint">Click for deep dive →</div>
+            </div>
+            <div class="need-card" style="background:#F3E8FF" onclick="openDD('dd-n5')">
+              <div class="need-icon">🏛️</div>
+              <div class="need-n">Need 05</div>
+              <div class="need-t">Policy Intelligence &amp; Industry-Academia Convening</div>
+              <div class="need-stat">ISM 2.0 being shaped now — window is open</div>
+              <div class="need-hint">Click for deep dive →</div>
+            </div>
+            <div class="need-card" style="background:#F0F4FF" onclick="openDD('dd-n6')">
+              <div class="need-icon">📍</div>
+              <div class="need-n">Need 06</div>
+              <div class="need-t">Western India Cluster Anchor</div>
+              <div class="need-stat">Sanand &lt;40min · Dholera &lt;1h10m · Surat &lt;4.5h</div>
+              <div class="need-hint">Click for deep dive →</div>
+            </div>
+          </div>
+          <div style="font-size:.68rem;color:var(--g3);font-style:italic">Click any need card for a full Deep Dive panel</div>
+        </div>
+        <div class="source">Source: NITI Aayog Frontier Tech Hub Report, 2026 · NAMTECH Policy Note on Regional Semiconductor Hubs · SEMI / Deloitte, 2025</div>
+      </div>
+    </div>
+
+    <!-- S14: PULL STRATEGY -->
+    <div class="slide" data-i="14">
+      <div class="s-inner">
+        <div class="eyebrow">Block 2 · Section C — Strategic Positioning</div>
+        <div class="action-title">NAMTECH's Distinctive Positioning in <em>India's Semiconductor Talent Ecosystem</em></div>
+        <div class="content">
+          <div style="background:#F4F2FB;border-radius:10px;padding:1rem 1.25rem;font-size:.82rem;color:var(--g1);line-height:1.7;border-left:3px solid var(--v)">
+            India's semiconductor mission requires not just factories and capital — it requires a trained workforce at every layer of the value chain. NAMTECH is distinctively positioned to serve this national need through four areas of focused capability that are rare, complementary, and directly aligned with what India's semiconductor ecosystem requires over the next decade.
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;flex:1">
+            <div style="background:#EDE7F6;border-radius:10px;padding:1rem 1.1rem">
+              <div style="font-size:1.25rem;margin-bottom:.3rem">🏭</div>
+              <div style="font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:.4rem">Backend ATMP as a Serious Academic Discipline</div>
+              <div style="font-size:.72rem;color:var(--g1);line-height:1.5">India's semiconductor curriculum has historically focused on frontend design — VLSI, RTL, chip architecture. Backend ATMP — wire bonding, wafer sawing, die attach, encapsulation, parametric testing — is the operational core of every approved ISM plant. NAMTECH is uniquely positioned to serve this training need with industrial-grade equipment and structured programmes.</div>
+            </div>
+            <div style="background:#E8F0FE;border-radius:10px;padding:1rem 1.1rem">
+              <div style="font-size:1.25rem;margin-bottom:.3rem">📍</div>
+              <div style="font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:.4rem">Western India Cluster — Proximity as Operational Advantage</div>
+              <div style="font-size:.72rem;color:var(--g1);line-height:1.5">Gujarat carries the highest concentration of ISM-approved semiconductor investment in India. NAMTECH's proximity to the Sanand, Dholera and Surat clusters — combined with a national and international partnership network spanning ArcelorMittal, Micron, Festo, Siemens, Schneider, ABB, CG Semiconductors, Kaynes and others — positions it as the natural talent anchor for this region.</div>
+            </div>
+            <div style="background:#ECFDF5;border-radius:10px;padding:1rem 1.1rem">
+              <div style="font-size:1.25rem;margin-bottom:.3rem">👷</div>
+              <div style="font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:.4rem">Technician-Scale Training at Industrial Volume</div>
+              <div style="font-size:.72rem;color:var(--g1);line-height:1.5">India needs 5 million semi-skilled semiconductor workers by 2030. Elite institutions serve design and research talent. NAMTECH is distinctively positioned to serve the technician and operator layer — through its admit-train-hire model, short-cycle programmes and employer-integrated curriculum — at the scale and accessibility that the manufacturing ecosystem requires.</div>
+            </div>
+            <div style="background:#FEF9EC;border-radius:10px;padding:1rem 1.1rem">
+              <div style="font-size:1.25rem;margin-bottom:.3rem">🕸️</div>
+              <div style="font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:.4rem">Hub-and-Spoke Network for Regional Talent Distribution</div>
+              <div style="font-size:.72rem;color:var(--g1);line-height:1.5">Delivering semiconductor manufacturing curriculum at national scale requires a hub-and-spoke architecture — standardised programmes deployed through partner institutions across regions. NAMTECH is building this network with its new campus as the hub, extending reach to ITIs and diploma colleges across Western India and beyond.</div>
+            </div>
+          </div>
+        </div>
+        <div class="source">Source: NITI Aayog Frontier Tech Hub Report, 2026 · ISM 2.0 policy signals, MeitY · NAMTECH strategic assessment</div>
+      </div>
+    </div>
+
+    <!-- S15: 5P STRATEGY -->
+    <div class="slide" data-i="15">
+      <div class="s-inner">
+        <div class="eyebrow">Block 2 · Section B</div>
+        <div class="action-title">NAMTECH maps onto all five pillars of India's semiconductor strategy — but the <em>People pillar is our primary and most defensible value proposition</em></div>
+        <div class="content">
+          <div class="p5-grid">
+            <div class="p5-card" style="background:#F8F7FC">
+              <div class="p5-icon">🔬</div>
+              <div class="p5-lbl">Pioneering</div>
+              <div class="p5-t">Materials, R&amp;D &amp; AI for semiconductor engineering</div>
+              <div class="p5-govt">Govt: Centres of Convergence at IITs/IISc · National Co-Design Platform · Sovereign EDA access</div>
+              <div class="p5-nmtc">NAMTECH: Collaborative research · NAMTECH Semiconductor CoE proposal · Faculty with IIT and global academic pedigree</div>
+            </div>
+            <div class="p5-card" style="background:#F8F7FC">
+              <div class="p5-icon">📋</div>
+              <div class="p5-lbl">Policy &amp; Investment</div>
+              <div class="p5-t">Enablers and trust — USD 135–180B over a decade</div>
+              <div class="p5-govt">Govt: GoI anchoring one-third (~USD 45–60B) · Full Stack Incentive regime · GSEM/DST funding</div>
+              <div class="p5-nmtc">NAMTECH: ISM MoU signed · Proposing talent development as a dedicated pillar under ISM 2.0 · Supporting GoG funding through multiple channels to build a sustainable talent model for Gujarat</div>
+            </div>
+            <div class="p5-card" style="background:#F8F7FC">
+              <div class="p5-icon">🏗️</div>
+              <div class="p5-lbl">Production</div>
+              <div class="p5-t">Fabs, packaging and secure manufacturing</div>
+              <div class="p5-govt">Govt: National Semiconductor Zones · Advanced Packaging Centre (NCAP) · Secure fabs for defence</div>
+              <div class="p5-nmtc">NAMTECH: Positioned as the talent and training anchor for India's semiconductor manufacturing clusters in Western India</div>
+            </div>
+            <div class="p5-card star" style="background:#EDE7F6">
+              <div class="p5-icon">👥</div>
+              <div class="p5-lbl">People ★ — NAMTECH's Primary Pillar</div>
+              <div class="p5-t">Talent and skilling — "must begin immediately"</div>
+              <div class="p5-govt">Govt: National Fab Academy · ITI/polytechnic networks · 4-layer talent pyramid · 85,000 professionals over 10 years</div>
+              <div class="p5-nmtc">NAMTECH: 2-year Masters programme across the semiconductor value chain · Admit-Train-Hire model with industry partners · Executive Development Programmes for working professionals · Hub-and-spoke network for regional talent distribution · L3, L5 and L6 curriculum development</div>
+            </div>
+            <div class="p5-card" style="background:#F8F7FC;grid-column:1/-1">
+              <div class="p5-icon">🤝</div>
+              <div class="p5-lbl">Partnership</div>
+              <div class="p5-t">Ecosystem, IP and geopolitical alignment</div>
+              <div class="p5-govt">Govt: USA, Japan, EU, South Korea links · Pax Silica (2026) · Global university linkages · IMEC-type consortia</div>
+              <div class="p5-nmtc">NAMTECH: NTNU/NTUT MoUs signed · MIT NanoLab under discussion · Micron anchor · Infineon (19 Jun) · USISPF engagement</div>
+            </div>
+          </div>
+        </div>
+        <button class="dd-btn" onclick="openDD('dd-s15')">+ Deep Dive — EC 1–19 criteria &amp; NAMTECH's eligibility position</button>
+        <div class="source">Source: NITI Aayog Frontier Tech Hub Report — "Future of India's Semiconductor Industry", Jun 2026 · ISM 2.0 scheme documents, MeitY</div>
+      </div>
+    </div>
+
+    <!-- S16: READINESS MAP -->
+    <div class="slide" data-i="16">
+      <div class="s-inner">
+        <div class="eyebrow">Block 2 · Section D</div>
+        <div class="action-title">NAMTECH holds <em>strong positions across all six national needs</em> — with a clear and time-bound execution roadmap progressing in parallel</div>
+        <div class="content">
+          <table class="ready-table">
+            <thead><tr><th>National Need</th><th>Readiness</th><th>NAMTECH Today</th><th>Next Milestone</th><th>Target</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Policy intelligence &amp; convening</strong></td>
+                <td><span class="tl-dot-r tl-g"></span>Active</td>
+                <td>ISM MoU signed. NAMTECH proposing talent development as dedicated ISM 2.0 pillar. Active engagement with MeitY and GSEM at senior levels.</td>
+                <td>Application-ready as soon as ISM 2.0 guidelines are released. Proposal for dedicated talent development funding track in preparation.</td>
+                <td><span class="badge b-g">Active</span></td>
+              </tr>
+              <tr>
+                <td><strong>Western India cluster anchor</strong></td>
+                <td><span class="tl-dot-r tl-g"></span>Active</td>
+                <td>Sanand &lt;40 min · Dholera &lt;1h10m · Surat &lt;4.5h. Backed by anchor organisation and national and international industry partnerships.</td>
+                <td>New campus Ahmedabad — purpose-built semiconductor facilities. Formal cluster partnerships. GoG/DST commitment.</td>
+                <td><span class="badge b-g">Active</span></td>
+              </tr>
+              <tr>
+                <td><strong>EDP for working professionals</strong></td>
+                <td><span class="tl-dot-r tl-a"></span>In progress</td>
+                <td>Industry engagement on admit-train-hire model actively underway with multiple semiconductor partners.</td>
+                <td>Structured EDP calendar. Named industry clients. Curriculum co-designed with industry partners.</td>
+                <td><span class="badge b-b">Jan 2027</span></td>
+              </tr>
+              <tr>
+                <td><strong>Lab readiness — Backend ATMP</strong></td>
+                <td><span class="tl-dot-r tl-a"></span>Two-track</td>
+                <td>2-year Masters programme launched. Faculty team in place. Lab development at new campus initiated as NAMTECH's independent investment.</td>
+                <td><strong>Track 1:</strong> NAMTECH's own lab development at new campus — Sep 2026.<br><strong>Track 2:</strong> Micron donated equipment commissioned — Feb 2027.</td>
+                <td><span class="badge b-b">Sep 2026 / Feb 2027</span></td>
+              </tr>
+              <tr>
+                <td><strong>L5 + L6 + Automation</strong></td>
+                <td><span class="tl-dot-r tl-a"></span>Two-track</td>
+                <td><strong>Automation:</strong> Programmes live and active across NAMTECH. <strong>L5/L6:</strong> Supply chain compliance and utilities engineering — curriculum to be developed.</td>
+                <td>L5 and L6 semiconductor-specific curriculum designed with industry co-input. Ready to deploy alongside lab commissioning.</td>
+                <td><span class="badge b-b">Feb 2027</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hub-and-spoke network</strong></td>
+                <td><span class="tl-dot-r tl-a"></span>Building</td>
+                <td>Framework designed. New campus provides the hub infrastructure. Gujarat cluster proximity creates natural spoke catchment.</td>
+                <td>Formal spoke agreements with partner ITIs and diploma colleges across Western India. Network expansion to accelerate post ISM 2.0 policy grant.</td>
+                <td><span class="badge b-b">Sep 2027</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="display:flex;gap:1rem;font-size:.68rem;color:var(--g2)">
+            <span><span class="tl-dot-r tl-g" style="width:8px;height:8px"></span> Active — progressing well</span>
+            <span><span class="tl-dot-r tl-a" style="width:8px;height:8px"></span> In progress — on track</span>
+          </div>
+        </div>
+        <div class="source">Source: NAMTECH internal assessment · NAMTECH project tracker, Jun 2026 · ISM 2.0 policy signals, MeitY</div>
+      </div>
+    </div>
+
+    <!-- S17: CLOSING -->
+    <div class="slide slide-divider" data-i="17">
+      <div class="div-inner">
+        <div class="div-tag">Closing Frame</div>
+        <div class="div-line"></div>
+        <div class="div-title">NAMTECH Is Ready.<br>India Needs This.</div>
+        <div class="div-desc" style="margin-top:.6rem">ISM 1.0 built the factories. ISM 2.0 must build the workforce. NAMTECH is distinctively positioned at exactly this intersection — with the geography, the partnerships, the programmes and the policy engagement to serve India's semiconductor talent mission at national scale.</div>
+        <div style="margin-top:1.75rem;display:flex;gap:.75rem;flex-wrap:wrap">
+          <div style="background:rgba(93,36,252,.2);border:1px solid var(--v);border-radius:10px;padding:.85rem 1.1rem;min-width:180px">
+            <div style="font-size:8.5px;color:var(--lav);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.3rem">NAMTECH's Proposal</div>
+            <div style="font-size:.8rem;color:#fff;font-weight:500">NAMTECH is preparing a proposal for a dedicated talent development funding pillar under ISM 2.0 — positioning talent as a core, independently funded track within the national semiconductor mission.</div>
+          </div>
+          <div style="background:rgba(93,36,252,.2);border:1px solid var(--v);border-radius:10px;padding:.85rem 1.1rem;min-width:180px">
+            <div style="font-size:8.5px;color:var(--lav);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.3rem">NAMTECH Readiness</div>
+            <div style="font-size:.8rem;color:#fff;font-weight:500">Application-ready as soon as ISM 2.0 guidelines are released. Industry, academic and government partnerships ongoing. Hub-and-spoke model development actively underway.</div>
+          </div>
+          <div style="background:rgba(93,36,252,.2);border:1px solid var(--v);border-radius:10px;padding:.85rem 1.1rem;min-width:180px">
+            <div style="font-size:8.5px;color:var(--lav);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:.3rem">NAMTECH's Distinctive Position</div>
+            <div style="font-size:.8rem;color:#fff;font-weight:500">Own the white spaces · Build what India needs · Serve the national semiconductor mission as a uniquely positioned talent institution</div>
+          
+</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end viewport -->
+
+  <div class="bottom-nav">
+    <button class="nav-btn" id="prevBtn" onclick="prev()" disabled>← Previous</button>
+    <div class="nav-c">
+      <div class="nav-count">Slide <strong id="cn">1</strong> of <strong>18</strong></div>
+      <div class="nav-hint">← → arrow keys · click tiles on left · click need cards for deep dive</div>
+    </div>
+    <button class="nav-btn primary" id="nextBtn" onclick="next()">Next →</button>
+  </div>
+</div><!-- end stage -->
+</div><!-- end app -->
+
+<!-- DEEP DIVE DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="dd-head">
+    <div class="dd-head-t">⚡ Deep Dive</div>
+    <button class="dd-x" onclick="closeDD()">✕</button>
+  </div>
+  <div class="dd-body" id="ddBody"></div>
+</div>
+
+<!-- DEEP DIVE DATA STORE -->
+<div id="ddStore" style="display:none">
+
+<div id="dd-n1">
+<h3>Need 01 — Backend ATMP Talent at Industrial Scale</h3>
+<p><strong>The gap:</strong> 12 plants are approved. Micron and Kaynes are already operational. CG Power commercial from 2026. TSAT Phase 1 from 2026. Each plant needs hundreds to thousands of L1-level technicians and engineers — people who can operate wire bonding machines, wafer saws, die attach equipment, encapsulation lines, and parametric test systems.</p>
+<p><strong>Why no one addresses it:</strong> Every IIT, NIT and private engineering college teaches frontend semiconductor — VLSI design, RTL coding, physical design. These are software-adjacent skills that can be taught in a classroom. Backend ATMP is hands-on, machine-specific, process-intensive. It requires industrial-grade equipment to teach properly. Before NAMTECH's Micron equipment arrives (post-FCRA, Feb 2027), no academic institution in India has this equipment.</p>
+<p><strong>NAMTECH's position:</strong> With Micron's 3 machines — Wire Bonding (KNS ICONN 1pf), Wafer Saw (DFD6362), Die Attach (Canon D02HT) — NAMTECH will be uniquely positioned to serve backend ATMP training needs with industrial-grade equipment — addressing one of the most urgent capability gaps in India's semiconductor talent ecosystem.</p>
+<p><strong>The PDEU learning:</strong> PDEU hired 3 dedicated engineers just to run their 3 Micron machines. Faculty alone cannot run these machines. NAMTECH must plan for dedicated technical staff from the outset.</p>
+</div>
+
+<div id="dd-n2">
+<h3>Need 02 — Hub-and-Spoke Network to ITIs and Diploma Colleges</h3>
+<p><strong>The gap:</strong> NITI Aayog projects 5 million semi-skilled semiconductor workers needed by 2030. The C2S programme has reached 315 universities — but these produce VLSI designers and chip architects, not shopfloor technicians. No equivalent network exists for backend manufacturing training at the ITI and diploma college level.</p>
+<p><strong>Why it matters:</strong> A wire bonding operator, a cleanroom technician, a yield monitoring assistant — these are the people that run ATMP plants at scale. Micron's Sanand plant and Tata's Jagiroad plant cannot operate at capacity without them. They will not come from IITs. They will come from ITIs and polytechnics — if someone builds the curriculum and trains the trainers.</p>
+<p><strong>NAMTECH's model:</strong> NAMTECH becomes the hub — the institution with industrial equipment, certified curriculum, and trained faculty. Partner ITIs and diploma colleges across Western India become the spokes — delivering the curriculum at scale with standardised assessment and LMS-backed tracking.</p>
+<p><strong>EC-13 significance:</strong> This criterion is weighted at 40 points — the highest single criterion in NAMTECH's own eligibility framework. It is weighted so heavily because it is so rare. Almost no institution has built this. Whoever does first owns the talent pipeline for a decade.</p>
+</div>
+
+<div id="dd-n3">
+<h3>Need 03 — Short-Cycle EDP for Working Professionals</h3>
+<p><strong>The gap:</strong> India's current semiconductor workforce stands at approximately 345,000 professionals. By 2030, it needs to reach 460,000. But the more acute problem is not headcount — it is skills mismatch. 67,000 positions are projected to remain vacant by 2030 because existing engineers and technicians lack the specific semiconductor skills those positions require.</p>
+<p><strong>The opportunity:</strong> As ISM plants ramp from mature nodes toward more advanced processes, their own engineers need reskilling. A process engineer at a 28nm fab will need to learn new materials, new equipment, new yield management techniques as the fab evolves. No institution is running structured Executive Development Programmes for working semiconductor professionals at scale in India.</p>
+<p><strong>NAMTECH's position:</strong> NAMTECH's admit-train-hire model — being developed with industry partners — is the first step. This is employer-commissioned workforce development, not just student training. Once the new campus is operational (2027), structured EDP for working professionals becomes a significant revenue stream and a strategic relationship tool with every ISM-approved company in the region.</p>
+</div>
+
+<div id="dd-n4">
+<h3>Need 04 — L5 + L6 + Automation: The Invisible Layers</h3>
+<p><strong>L5 — Supply Chain and Trade Compliance:</strong> Semiconductor supply chains involve 300+ chemicals and gases, equipment from 40+ countries, and export control regimes (US EAR, Wassenaar, SCOMET) that require specialist legal-technical competence. A single compliance failure on a dual-use export can result in US Bureau of Industry and Security (BIS) debarment — shutting off access to all US semiconductor equipment globally. No academic institution in India trains for this. Yet every ISM plant needs L5 professionals from day one.</p>
+<p><strong>L6 — Utilities and Infrastructure:</strong> A 200mm fab consumes 2–4 million litres of ultra-pure water per day (18.2 MΩ·cm resistivity). A UPW system failure shuts the fab within hours. Specialty gas systems (silane, arsine, phosphine), cleanroom HVAC, chemical neutralisation — these are the most operationally critical and most invisible skills in the semiconductor industry. Nobody teaches them.</p>
+<p><strong>Automation and Robotics — NAMTECH's Cross-Layer Advantage:</strong> NAMTECH's existing automation and robotics capabilities — already live across its CoEs — map directly onto L3 (Automation, Robotics and Smart Manufacturing). Modern semiconductor fabs use overhead monorail AMHS systems that move 2,000+ lots per day without human contact. A few skilled automation engineers managing AMHS uptime can prevent yield losses worth ₹5–15 Cr per day. NAMTECH's automation strength is not a new capability to build — it is an existing strength that semiconductor plants urgently need. This is the pull strategy in action.</p>
+</div>
+
+<div id="dd-n5">
+<h3>Need 05 — Policy Intelligence and Industry-Academia Convening</h3>
+<p><strong>Why this is strategic:</strong> ISM 2.0 guidelines are expected in W2 August 2026. The application window will open shortly after. The institutions that have been in active dialogue with MeitY — that have submitted their positioning, that have built relationships with Mr. Amitesh Kumar Sinha (CEO ISM) and Dr. Surinder Singh (ISM POC) — will be able to respond within days of the guidelines release. Institutions seeing the guidelines for the first time will take months to formulate a response.</p>
+<p><strong>NAMTECH's current position:</strong> ISM MoU signed at Semicon India 2025. Eligibility criteria document submitted to Dr. Surinder Singh. CEO ISM campus visit 22 Jun 2026. Telcon with Mr. Amitesh confirmed for 29 Jun 2026. GSEM engagement active with Mission Director Neha Kumari (IAS). Nikhil embedded in MeitY policy dialogue daily. This is not relationship management — it is a strategic positioning asset that took 18 months to build and cannot be replicated quickly.</p>
+<p><strong>The convening dimension:</strong> EC-12 in NAMTECH's eligibility framework specifically weights institutions that have convened government-industry-academia policy dialogue. NAMTECH's work on ISM 2.0 talent pillar advocacy — bringing together the 6-layer workforce architecture, the 19-criterion eligibility framework, and the hub-and-spoke model — positions NAMTECH as a thought leader in this space, not just an applicant.</p>
+</div>
+
+<div id="dd-n6">
+<h3>Need 06 — Western India Cluster Anchor</h3>
+<p><strong>The geography:</strong> Gujarat has more ISM-approved semiconductor investment than any other state. Micron (Sanand), CG Power (Sanand), Kaynes (Sanand), Tata-PSMC (Dholera), Crystal Matrix (Dholera), Suchi Semicon (Surat) — all within driving distance of NAMTECH's campus. NAMTECH is uniquely positioned to serve as the talent and training anchor for this cluster — with proximity that translates directly into operational advantage for every plant in the region.</p>
+<p><strong>Proximity advantage:</strong> Sanand: less than 40 minutes · Dholera: less than 1 hour 10 minutes · Surat: less than 4.5 hours. Companies can send working professionals to NAMTECH for training without overnight stays. Faculty can conduct site visits and co-develop curriculum with live industrial processes. This reduces friction in every dimension of the industry-academia partnership.</p>
+<p><strong>Partnership ecosystem:</strong> NAMTECH's foundation spans national and international players — with ArcelorMittal as anchor organisation, alongside partnerships with Micron, Festo, Siemens, Schneider Electric, ABB, Adverb, Tata Electronics, CG Semiconductors, Kaynes ecosystem and others. This network creates a distinctive and credible foundation for building India's semiconductor talent pipeline at scale.</p>
+<p><strong>Looking ahead:</strong> The new NAMTECH campus in Ahmedabad (CY2028) will further strengthen the geographic anchor — purpose-built facilities at a scale that the current IIT-GN Research Park transitory space cannot match.</p>
+</div>
+
+<div id="dd-context">
+<h3>India's Semiconductor History — 1976 to 2021</h3>
+<p>SCL Mohali (1976) — fire in 1989 set it back. SemIndia (2007) — fell through. For four decades, every attempt stalled. What changed in 2021: COVID supply chain shock, geopolitical recognition of East Asia concentration, and a $110B import trajectory converged simultaneously.</p>
+<h3>Global Race Context</h3>
+<p>US CHIPS Act: $52.7B. EU Chips Act: €43B. Japan: $6B+. India's ISM 1.0: ₹76,000 Cr (~$9B). ISM 2.0 at ₹1.20 lakh Cr substantially closes that gap and signals a multi-generational commitment.</p>
+<h3>₹76,000 Cr vs ₹1.64 lakh Cr</h3>
+<p>₹76,000 Cr = government subsidy pool (50% of eligible project costs). ₹1.64 lakh Cr = total private investment committed by 12 companies from their own balance sheets. For every ₹1 of government subsidy, ISM has unlocked ₹2.16 of private capital — a leverage ratio that validates the programme's design.</p>
+</div>
+
+
+<div id="dd-s2">
+<h3>India's Semiconductor History — 1976 to 2021</h3>
+<p>India's semiconductor story did not begin with ISM. The Semiconductor Complex Limited (SCL) was established at Mohali in 1976 but lost ground after a fire in 1989. A 2007 attempt to attract foreign fabs through SemIndia fell through. For nearly four decades, every attempt stalled, collapsed or never got off the ground.</p>
+<p>What changed in 2021 was three forces converging simultaneously: COVID-19 exposing supply chain fragility (Indian carmakers cut production by 20–25%), geopolitical recognition that 75% of global wafer fabrication capacity was concentrated in East Asia, and an economic trajectory where chip imports were heading to $110 billion by 2030.</p>
+<h3>Global Race Context</h3>
+<p>The US CHIPS and Science Act committed $52.7 billion. The EU Chips Act committed €43 billion. Japan exceeded $6 billion. India's ISM 1.0 at ₹76,000 Cr (~$9B) was significant but smaller — ISM 2.0 at ₹1.20 lakh Cr substantially closes that gap and signals a multi-generational commitment.</p>
+<h3>The ₹76,000 Cr vs ₹1.64 lakh Cr Distinction</h3>
+<p><strong>₹76,000 Cr</strong> = Government of India's subsidy pool — maximum amount the government commits to pay (up to 50% of eligible project costs). <strong>₹1.64 lakh Cr</strong> = Total private investment companies spend from their own balance sheets. For every ₹1 of government subsidy, ISM has unlocked ₹2.16 of private capital — a leverage ratio that validates the programme's design.</p>
+</div>
+
+<div id="dd-s3">
+<h3>Why SPECS is Different from ISM</h3>
+<p>The Scheme for Promotion of Manufacturing of Electronic Components and Semiconductors (SPECS) targets electronic components more broadly — not just chips. Sahasra Semiconductors (Bhiwadi, Rajasthan — ₹150 Cr, inaugurated May 2026) received SPECS support, not ISM. Including it in the ISM 12 would be factually incorrect. It is noted as a complementary initiative.</p>
+<h3>SCL Mohali — Strategic Significance</h3>
+<p>SCL Mohali is India's only integrated facility producing ASICs for defence, space and aerospace. The ₹4,500 Cr modernisation over 3 years (₹900 Cr in FY26-27) is India's sovereign chip capability for strategic sectors — independent of commercial fab timelines. It also serves as the fabrication facility for C2S student chip designs (94 chips fabricated there).</p>
+<h3>ECMS — The Component Manufacturing Layer</h3>
+<p>The Electronic Components Manufacturing Scheme has been enhanced from ₹22,919 Cr to ₹40,000 Cr. This scheme supports the component and substrate ecosystem that fabs and ATMP plants depend on — reducing import dependency not just for chips but for the materials and components that go into chip packaging.</p>
+<h3>ISM 2.0 — New Scope Areas vs ISM 1.0</h3>
+<p>ISM 2.0 explicitly expands beyond ISM 1.0 to include: materials, R&D, chemicals, gases, equipment manufacturing, and skilling. This means institutions like NAMTECH — which operate in the talent and training space — now have a direct pathway into ISM 2.0 funding that did not exist under ISM 1.0.</p>
+</div>
+
+<div id="dd-s5">
+<h3>Pilot Lines vs Commercial Production — The Distinction</h3>
+<p>CG Power inaugurated its OSAT pilot line in August 2025 — this is validation-scale production, not full commercial volumes. Micron's Phase 1 began actual commercial production (DRAM and NAND memory chips for global supply chains) in early 2026. Kaynes began commercial production in March 2026. The distinction matters because pilot lines generate learning curves but not revenue at scale.</p>
+<h3>The Tata-PSMC Significance</h3>
+<p>At ₹91,526 Cr (~$10.1B), Tata-PSMC at Dholera is India's largest single private investment in any sector. It is India's first commercial wafer fab — 28nm process node, 50,000 wafer starts per month, targeting automotive, AI, consumer electronics and 5G chips. Commercial operations targeted FY2029–30. This single project creates a massive demand for trained semiconductor engineers and technicians in Gujarat — directly in NAMTECH's catchment area.</p>
+<h3>Investment Disbursement</h3>
+<p>How much of the ₹76,000 Cr government outlay has actually been disbursed vs committed vs remaining — to be confirmed with MeitY. Disbursement is milestone-linked (construction start, commissioning, production volumes) so actual cash out is likely significantly less than total commitment at this stage.</p>
+<h3>Geographic Concentration</h3>
+<p>8 of 12 approved projects are in Gujarat — Micron, CG Power, Kaynes, Tata-PSMC, Crystal Matrix and Suchi Semicon in the Sanand-Dholera-Surat corridor, plus TSAT in Assam and HCL-Foxconn in UP. This geographic concentration is NAMTECH's structural advantage — no other academic institution has this proximity to so many active ISM projects simultaneously.</p>
+</div>
+
+<div id="dd-s6">
+<h3>DLI Scheme — Detailed Terms</h3>
+<p>Design Linked Incentive: up to 50% of eligible costs capped at ₹15 Cr per application for design prototyping and scaling. 6% to 4% of net sales over 5 years capped at ₹30 Cr for deployment and commercialisation. 24 projects approved. 15 companies have raised VC funding. 7 chips fabricated including at advanced nodes (12nm at TSMC). ₹650 Cr in VC funding raised by startups. 10 patents filed. 140+ reusable IP cores developed.</p>
+<h3>Key DLI Startup Examples</h3>
+<ul>
+<li><strong>Saankhya Labs</strong> — 5G baseband processing SoC for telecom infrastructure</li>
+<li><strong>Netrasemi</strong> — 64 TOPS AI chip at 12nm TSMC for edge computing and robotics</li>
+<li><strong>BigEndian Semiconductors</strong> — video surveillance SoC</li>
+<li><strong>MosChip</strong> — VIDYUT smart energy meter IC</li>
+<li><strong>Fermionic Design</strong> — satellite communication beamformer chip</li>
+<li><strong>MMRFIC</strong> — Ka-Band RADAR chip for defence applications</li>
+<li><strong>Mindgrove Technologies</strong> — Vision SoC using Shakti processor for edge computing</li>
+</ul>
+<h3>C2S Programme</h3>
+<p>315 universities/institutes with EDA tool access. 65 lakh hours of tool usage. 146 designs taped out by 49 institutions. 94 student-designed chips fabricated at SCL Mohali. Another 50+ institutions preparing ~80 new chip designs for fabrication. The programme has demonstrated that Indian academia can produce real, working silicon — a critical proof point for ISM 2.0 scale-up.</p>
+</div>
+
+<div id="dd-s7">
+<h3>The 6-Layer Semiconductor Workforce Architecture</h3>
+<p>NAMTECH has developed a 6-layer taxonomy covering the full semiconductor workforce — more granular than NITI Aayog's 4-layer pyramid and directly actionable for curriculum design:</p>
+<ul>
+<li><strong>L1 — Core Manufacturing:</strong> Process engineers, equipment engineers, yield/SPC, defect inspection, contamination control. A 1% yield improvement in a 28nm fab = ₹80–120 Cr additional revenue per year.</li>
+<li><strong>L2 — Design and Engineering:</strong> VLSI/physical design, RTL, DFT, analog/mixed-signal, layout, verification, EDA specialists, SoC architects.</li>
+<li><strong>L3 — Automation, Robotics and Smart Manufacturing:</strong> AMHS engineers, PLC/SCADA, MES integration, Industry 4.0, predictive maintenance. AMHS uptime failures can cost ₹5–15 Cr per day in yield losses.</li>
+<li><strong>L4 — AI, Digital and Data Manufacturing:</strong> AI/ML for yield prediction, digital twins, semiconductor data scientists, APC engineers. AI-enabled yield management projected to reduce fab costs by 8–12% by 2028.</li>
+<li><strong>L5 — Supply Chain and Trade:</strong> Export control/trade compliance (SCOMET/EAR/ITAR), vendor development, dual-use goods. A single compliance failure = US BIS debarment = no US semiconductor equipment globally.</li>
+<li><strong>L6 — Utilities, Sustainability and Infrastructure:</strong> Ultra-pure water (200mm fab consumes 2–4M litres/day), specialty gas handling, cleanroom HVAC, wastewater treatment. A UPW failure shuts a fab within hours.</li>
+</ul>
+<h3>NAMTECH's Automation Advantage</h3>
+<p>NAMTECH's existing automation and robotics programmes — already live — map directly onto L3. Modern semiconductor fabs use overhead monorail AMHS systems moving 2,000+ lots per day without human contact. NAMTECH's automation strength is not a new capability to build — it is an existing strength that semiconductor plants urgently need. This is the pull strategy in action.</p>
+</div>
+
+<div id="dd-s12">
+<h3>The Angstrom-Scale Shift</h3>
+<p>The global semiconductor frontier has moved from nm (nanometer) to angstrom-scale. TSMC and Samsung are at 2nm commercially (2025–26). The next generation — angstrom-class — uses 2D materials like molybdenum disulfide (MoS2) instead of silicon. This is a fundamental material change, not just geometry shrink. India's approved fabs at 28nm and above are the right entry point. ISM 2.0's focus on 3nm/2nm is India's response to this shift.</p>
+<h3>India's 2D Materials Research Base</h3>
+<p>IISc Bengaluru, IIT Bombay, IIT Madras, IIT Delhi, JNCASR and TIFR have published widely on graphene, MoS2, WSe2 and heterostructures. The gap is industry linkage. The proposed India Semiconductor Research Centre (ISRC) is intended to bridge academic research to fab-relevant validation.</p>
+<h3>Pax Silica — The Geopolitical Dimension</h3>
+<p>India joined Pax Silica in 2026 — a US-led coalition to build secure silicon supply chains. Key members: USA, India, Japan, South Korea, Singapore, Australia, Israel, UK, Qatar, UAE. This is about securing access to EUV lithography (ASML, Netherlands — sole global supplier of machines costing $400M+ each) through trusted alliances — not just commercial relationships.</p>
+<h3>India's Import Trajectory</h3>
+<p>India cumulatively spent ~$150 billion on semiconductor imports between FY17 and FY25, growing at 23% CAGR. If this trend continues, annual import costs could hit $240 billion by 2035. This is the fiscal argument for ISM 2.0 that is independent of any geopolitical consideration.</p>
+</div>
+
+<div id="dd-s15">
+<h3>EC 1–19 — NAMTECH's Eligibility Framework</h3>
+<p>NAMTECH has developed a 19-criterion eligibility framework for ISM 2.0 Hub applications, submitted to Dr. Surinder Singh at MeitY. This is NAMTECH's advocacy — not released government policy. Key criteria and NAMTECH's position:</p>
+<ul>
+<li><strong>EC-01 Geographic proximity:</strong> Within 100km of ISM cluster. NAMTECH: Sanand &lt;40 min, Dholera &lt;1h10m. ✓ Strong.</li>
+<li><strong>EC-02 Active semiconductor MoUs (10+ required):</strong> NAMTECH: Micron (Jan 2024), ISM MoU (Semicon India 2025), NTNU/NTUT, Infineon (Jun 2026). ✓ Good, building.</li>
+<li><strong>EC-03 Workforce layer coverage L1–L6:</strong> NAMTECH: L2 strong, L3 active (automation). L1 post-equipment (Feb 2027). L5/L6 to be developed (Sep 2027).</li>
+<li><strong>EC-04 Minimum 15,000 sq ft dedicated technical space:</strong> NAMTECH: transitory 3,000 sq ft. Phase 1B: 7,200 sq mt proposed. New campus planned. Gap to be closed.</li>
+<li><strong>EC-13 Hub-and-spoke architecture (40 points — highest criterion):</strong> NAMTECH: framework proposed, formal spoke agreements to be developed. Highest priority action item.</li>
+<li><strong>EC-07 ISM MoU (20 points):</strong> NAMTECH: ISM MoU signed at Semicon India 2025. ✓ Points secured.</li>
+<li><strong>EC-12 Policy convening power:</strong> NAMTECH: ISM 2.0 policy advocacy, talent development pillar submission to Dr. Surinder Singh. ✓ Demonstrated.</li>
+</ul>
+<p>Full EC 1–19 readiness assessment to be completed with Dr. Raja before ISM 2.0 application submission (target Sep 2026).</p>
+</div>
+
+</div><!-- end ddStore -->
+
+<script>
+let cur=0;
+const TOTAL=18;
+const slides=document.querySelectorAll('.slide');
+const tiles=document.querySelectorAll('.tile');
+const pb=document.getElementById('pb');
+const cn=document.getElementById('cn');
+const prevBtn=document.getElementById('prevBtn');
+const nextBtn=document.getElementById('nextBtn');
+const drawer=document.getElementById('drawer');
+const ddBody=document.getElementById('ddBody');
+
+function go(n){
+  if(n<0||n>=TOTAL)return;
+  slides[cur].classList.remove('active');
+  tiles[cur].classList.remove('active');
+  cur=n;
+  slides[cur].classList.add('active');
+  tiles[cur].classList.add('active');
+  tiles[cur].scrollIntoView({block:'nearest',behavior:'smooth'});
+  pb.style.width=((cur+1)/TOTAL*100)+'%';
+  cn.textContent=cur+1;
+  prevBtn.disabled=cur===0;
+  nextBtn.disabled=cur===TOTAL-1;
+  closeDD();
+}
+function prev(){go(cur-1)}
+function next(){go(cur+1)}
+function openDD(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  ddBody.innerHTML=el.innerHTML;
+  drawer.classList.add('open');
+}
+function closeDD(){drawer.classList.remove('open')}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')next();
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp')prev();
+  else if(e.key==='Escape')closeDD();
+});
+go(0);
+</script>
+</body>
+</html>
